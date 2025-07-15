@@ -2,105 +2,29 @@
 <html lang="uk">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>3D Viewer</title>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-        }
-
-        canvas {
-            display: block;
-        }
-
-        #annotations-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            pointer-events: none;
-            z-index: 10;
-        }
-
-        .annotation {
-            position: absolute;
-            width: 32px;
-            height: 32px;
-            background: url('/img/icon.svg') no-repeat center center;
-            background-size: contain;
-            transform: translate(-50%, -50%);
-            pointer-events: auto;
-            cursor: pointer;
-        }
-
-        .modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-.modal.hidden {
-  display: none;
-}
-
-.modal-content {
-  width: 220px;
-  height: 180px;
-  background-color: rgba(255, 255, 255, 0.95);
-  border-radius: 8px;
-  padding: 20px;
-  text-align: center;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-close {
-  position: absolute;
-  top: 6px;
-  right: 10px;
-  font-size: 22px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-#modal-link {
-  font-size: 16px;
-  color: #0077cc;
-  text-decoration: none;
-}
-
-#modal-link:hover {
-  text-decoration: underline;
-}
-
-
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D Viewer</title>
+  <link rel="stylesheet" href="/style.css" />
 </head>
 
 <body>
-    <div id="annotations-container"></div>
-    <!-- Модальне вікно -->
-    <div id="modal" class="modal hidden">
-        <div class="modal-content">
-            <span class="modal-close" id="modal-close">&times;</span>
-            <a id="modal-link" href="https://rundgang.viriditas.info/de/tour/burg-klopp-bingen" target="_blank">
-                Burg Klopp virtueller Rundgang
-            </a>
-        </div>
+  <div class="annotation" style="background-image: url('/img/church_white.svg');"></div>
+
+
+  <div id="annotations-container"></div>
+
+  <!-- Модальне вікно -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <span class="modal-close" id="modal-close">&times;</span>
+      <a id="modal-link" href="https://rundgang.viriditas.info/de/tour/burg-klopp-bingen" target="_blank">
+        Burg Klopp virtueller Rundgang
+      </a>
     </div>
+  </div>
 
-
-    <script type="module" src="/src/main.js"></script>
+  <script type="module" src="/src/main.js"></script>
 </body>
 
 </html>

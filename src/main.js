@@ -14,10 +14,8 @@ camera.position.set(2, 2, 4);
 // Рендерери
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
-
 renderer.setPixelRatio(window.devicePixelRatio);
-
+document.body.appendChild(renderer.domElement);
 
 const labelRenderer = new CSS2DRenderer();
 labelRenderer.setSize(window.innerWidth, window.innerHeight);
@@ -40,45 +38,71 @@ controls.update();
 // Клік по моделі → координати
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
-
 renderer.domElement.addEventListener('click', (event) => {
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
   raycaster.setFromCamera(mouse, camera);
   const intersects = raycaster.intersectObjects(scene.children, true);
-
   if (intersects.length > 0) {
     const point = intersects[0].point;
     console.log(`🟢 Клік: x=${point.x.toFixed(5)}, y=${point.y.toFixed(5)}, z=${point.z.toFixed(5)}`);
   }
 });
 
-// Завантаження моделі + додавання анотації
+// Завантаження моделі та додавання анотацій
 const loader = new GLTFLoader();
 loader.load('/model.glb', (gltf) => {
   const model = gltf.scene;
   scene.add(model);
   console.log('✅ Модель завантажено');
 
-  // Анотація: Burg Klopp
-  const annotationPos = new THREE.Vector3(-0.01821, -4.2822, 2.03770);
+  const annotations = [
+    {
+      position: new THREE.Vector3(-0.01821, -4.2822, 2.0377),
+      icon: '/img/burgklopp.svg',
+      link: 'https://rundgang.viriditas.info/de/tour/burg-klopp-bingen',
+      title: 'Burg Klopp virtueller Rundgang'
+    },
+    {
+      position: new THREE.Vector3(-0.69461, -4.40775, -0.09865),
+      icon: '/img/church.png',
+      link: 'https://rundgang.viriditas.info/de/tour/basilika-bingen',
+      title: 'Basilika Bingen'
+    },
+    {
+      position: new THREE.Vector3(1.30601, -4.55723, -1.18832),
+      icon: '/img/museum.svg',
+      link: 'https://rundgang.viriditas.info/de/tour/museum-am-strom-bingen',
+      title: 'Virtueller Rundgang im Museum am Strom'
 
-  const annotationIcon = document.createElement('img');
-  annotationIcon.src = '/img/burgklopp.svg';
-  annotationIcon.style.width = '32px';
-  annotationIcon.style.height = '32px';
-  annotationIcon.style.pointerEvents = 'auto';
-  annotationIcon.style.cursor = 'pointer';
-  annotationIcon.addEventListener('click', (e) => {
-  e.stopPropagation(); // щоб не викликалося raycast-клік
-  openModal();
-});
+    },
+    {
+      position: new THREE.Vector3(1.53361, -4.65066, -0.92239),
+      icon: '/img/garden.svg',
+      link: 'https://rundgang.viriditas.info/de/tour/hildegarten',
+      title: 'Virtueller Rundgang durch den Hildegarten'
+    }
 
+    // 🔽 Додай ще тут
+  ];
 
-  const label = new CSS2DObject(annotationIcon);
-  label.position.copy(annotationPos);
-  scene.add(label);
+  annotations.forEach(({ position, icon, link, title }) => {
+    const annotationIcon = document.createElement('img');
+    annotationIcon.src = icon;
+    annotationIcon.classList.add('annotation-icon'); // один клас для всіх
+    annotationIcon.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const rect = annotationIcon.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      openModalAt(x + 15, y + 15, link, title);
+    });
+
+    const label = new CSS2DObject(annotationIcon);
+    label.position.copy(position);
+    scene.add(label);
+  });
 }, undefined, (err) => {
   console.error('❌ Помилка завантаження моделі:', err);
 });
@@ -100,8 +124,16 @@ window.addEventListener('resize', () => {
   labelRenderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-function openModal() {
-  document.getElementById('modal').classList.remove('hidden');
+// ===== Modal Functions =====
+function openModalAt(x, y, link, title) {
+  const modal = document.getElementById('modal');
+  const linkEl = document.getElementById('modal-link');
+  linkEl.href = link;
+  linkEl.textContent = title;
+
+  modal.style.left = `${x}px`;
+  modal.style.top = `${y}px`;
+  modal.classList.remove('hidden');
 }
 
 document.getElementById('modal-close').addEventListener('click', () => {
@@ -113,4 +145,3 @@ document.getElementById('modal').addEventListener('click', (e) => {
     document.getElementById('modal').classList.add('hidden');
   }
 });
-
