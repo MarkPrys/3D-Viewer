@@ -60,26 +60,26 @@ loader.load('/model.glb', (gltf) => {
   const annotations = [
     {
       position: new THREE.Vector3(-0.01821, -4.2822, 2.0377),
-      icon: '/img/burgklopp.svg',
+      icon: './img/burgklopp.svg',
       link: 'https://rundgang.viriditas.info/de/tour/burg-klopp-bingen',
       title: 'Burg Klopp virtueller Rundgang'
     },
     {
       position: new THREE.Vector3(-0.69461, -4.40775, -0.09865),
-      icon: '/img/church.png',
+      icon: './img/church.png',
       link: 'https://rundgang.viriditas.info/de/tour/basilika-bingen',
       title: 'Basilika Bingen'
     },
     {
       position: new THREE.Vector3(1.30601, -4.55723, -1.18832),
-      icon: '/img/museum.svg',
+      icon: './img/museum.svg',
       link: 'https://rundgang.viriditas.info/de/tour/museum-am-strom-bingen',
       title: 'Virtueller Rundgang im Museum am Strom'
 
     },
     {
       position: new THREE.Vector3(1.53361, -4.65066, -0.92239),
-      icon: '/img/garden.svg',
+      icon: './img/garden.svg',
       link: 'https://rundgang.viriditas.info/de/tour/hildegarten',
       title: 'Virtueller Rundgang durch den Hildegarten'
     }
