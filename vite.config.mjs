@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  base: '/3D-Viewer/',
+  base: '/KuLaTainment/bingen/',
   assetsInclude: ['**/*.glb']
 });

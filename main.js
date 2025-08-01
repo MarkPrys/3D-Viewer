@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { CSS2DRenderer, CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer.js';
+import { title } from 'process';
 
 // Сцена
 const scene = new THREE.Scene();
@@ -56,7 +57,7 @@ renderer.domElement.addEventListener('click', (event) => {
 
 // Завантаження моделі та додавання анотацій
 const loader = new GLTFLoader();
-loader.load('/3D-Viewer/model.glb', (gltf) => {
+loader.load('./model.glb', (gltf) => {
   const model = gltf.scene;
   scene.add(model);
   console.log('✅ Model uploaded');
@@ -64,27 +65,33 @@ loader.load('/3D-Viewer/model.glb', (gltf) => {
   const annotations = [
     {
       position: new THREE.Vector3(-0.01821, -4.2822, 2.0377),
-      icon: '/3D-Viewer/img/burgklopp.svg',
+      icon: './img/burgklopp.svg',
       link: 'https://rundgang.viriditas.info/de/tour/burg-klopp-bingen',
       title: 'Burg Klopp virtueller Rundgang'
     },
     {
       position: new THREE.Vector3(-0.69461, -4.40775, -0.09865),
-      icon: '/3D-Viewer/img/church.png',
+      icon: './img/church.png',
       link: 'https://rundgang.viriditas.info/de/tour/basilika-bingen',
-      title: 'Basilika Bingen'
+      title: 'Virtueller Rundgang der Basilika Bingen'
     },
     {
       position: new THREE.Vector3(1.30601, -4.55723, -1.18832),
-      icon: '/3D-Viewer/img/museum.svg',
+      icon: './img/museum.svg',
       link: 'https://rundgang.viriditas.info/de/tour/museum-am-strom-bingen',
       title: 'Virtueller Rundgang im Museum am Strom'
     },
     {
       position: new THREE.Vector3(1.53361, -4.65066, -0.92239),
-      icon: '/3D-Viewer/img/garden.svg',
+      icon: './img/garden.svg',
       link: 'https://rundgang.viriditas.info/de/tour/hildegarten',
       title: 'Virtueller Rundgang durch den Hildegarten'
+    },
+    {
+      position: new THREE.Vector3(0.39346, -4.36081, 1.92313),
+      icon: './img/bingen.png',
+      link: 'https://www.bingen.de/',
+      title: 'Bingen am Rhein - die offizielle Seite der Stadt Bingen'
     }
   ];
 
@@ -104,9 +111,6 @@ loader.load('/3D-Viewer/model.glb', (gltf) => {
     label.position.copy(position);
     scene.add(label);
   });
-
-
-
 
   annotations.forEach(({ position, icon, link, title }) => {
     const annotationIcon = document.createElement('img');
